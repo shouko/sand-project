@@ -54,17 +54,8 @@ $app->get('/candidate', function() use($app) {
     $app->redirect('./login');
     $app->halt('302');
   }
-  $rel = R::find('relate', ' con = ? ', [$_SESSION['user']]);
-  echo '<h2>Candidates</h2>';
-  if(!$rel) {
-    echo 'You Have No Candidate';
-  } else {
-    foreach($rel as $r) {
-      $can = R::findOne('user', ' user = ? ', [$r['can']]);
-      echo '<img style="border-radius: 100%" src="assets/pic/'.$can['user'].'.jpg">';
-      echo '<br><br>Name: '.$can['name'].'<br><br>';
-    }
-  }
+  $can = R::find('user', ' user IN ( SELECT can FROM relate WHERE con = ? )', [$_SESSION['user']]);
+  $app->render('candidate_list.php', array('data' => $can));
 });
 
 $app->get('/opening', function() {
