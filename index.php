@@ -43,9 +43,9 @@ $app->post('/login', function() use($app) {
         'type' => 'success',
         'content' => 'Login Success!'
       );
-      print_r($user);
-      $_SESSION['user'] = $user['user'];
-      $_SESSION['type'] = $user['type'];
+      foreach($user as $key => $val) {
+        $_SESSION[$key] = $val;
+      }
       $app->redirect('./');
     } else {
       $_SESSION['flash'] = array(
