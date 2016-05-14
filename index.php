@@ -108,45 +108,27 @@ $app->get('/opening', function() {
   echo 'Opening';
 });
 
-$app->get('/info', function() {
-  echo 'info';
+$app->get('/info', function() use($app) {
+  if(isset($_GET['id'])) {
+    $info = R::findOne('info', ' id = ? ', [$_GET['id']]);
+    if($info) {
+      $app->render('info_detail.php', array('info' => $info));
+    }
+  } else {
+    $query = ' 1 ';
+    $param = array();
+    $pkeys = array('category', 'source');
+    foreach($pkeys as $pkey) {
+      if(isset($_GET[$pkey])) {
+        $query .= " AND ".$pkey." LIKE ?";
+        $param[] = "%".$_GET[$pkey]."%";
+      }
+    }
+    $info_list = R::find('info', $query, $param);
+    $app->render('info_list.php', array('data' => $info_list));
+  }
 });
 
-$app->get('/init', function() {
-  $user_key = array('user', 'pass', 'type', 'name');
-  $user = array(
-    array('can01', '12345', 'can', '張宛萍'),
-    array('can02', '23456', 'can', '林涵易'),
-    array('can03', '23456', 'can', '李海卉'),
-    array('can04', '23456', 'can', '賴碧珊'),
-    array('can05', '23456', 'can', '陳依夢'),
-    array('con01', '12345', 'con', '黃映萱'),
-    array('con02', '23456', 'con', '吳向波')
-  );
-  foreach($user as $u) {
-    if(!R::findOne('user', ' user = ? ', [$u[0]])) {
-      $ub = R::dispense('user');
-      foreach($user_key as $index => $key) {
-        $ub[$key] = $u[$index];
-      }
-      R::store($ub);
-    }
-  }
-  $relate = array(
-    array('can01', 'con01'),
-    array('can02', 'con02'),
-    array('can03', 'con01'),
-    array('can04', 'con02'),
-    array('can05', 'con01'),
-  );
-  foreach($relate as $r) {
-    if(!R::findOne('relate', ' can = ? AND con = ? ', [$r[0], $r[1]])) {
-      $rb = R::dispense('relate');
-      $rb->can = $r[0];
-      $rb->con = $r[1];
-      R::store($rb);
-    }
-  }
-});
+include 'routes/init.php';
 
 $app->run();
