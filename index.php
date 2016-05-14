@@ -23,48 +23,11 @@ $app->hook('slim.after.dispatch', function() use($app) {
    }
 });
 
-$app->get('/', function(){
-  echo '      <div class="page-header">
-          <h1>Sticky footer with fixed navbar</h1>
-        </div>
-        <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body > .container</code>.</p>
-        <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>';
+$app->get('/', function() use($app) {
+  $app->render('index.php');
 });
 
-$app->get('/login', function() use($app) {
-  $app->render('login.php');
-});
-
-$app->post('/login', function() use($app) {
-  if(isset($_POST['user']) && isset($_POST['pass'])) {
-    $user = R::findOne( 'user', ' user = ? ', [ $_POST['user'] ]);
-    if($user && $user['pass'] == $_POST['pass']) {
-      $_SESSION['flash'] = array(
-        'type' => 'success',
-        'content' => 'Login Success!'
-      );
-      foreach($user as $key => $val) {
-        $_SESSION[$key] = $val;
-      }
-      $app->redirect('./');
-    } else {
-      $_SESSION['flash'] = array(
-        'type' => 'danger',
-        'content' => 'Login Failed'
-      );
-      $app->redirect('login');
-    }
-  }
-});
-
-$app->get('/logout', function() use($app) {
-  $_SESSION = array();
-  $_SESSION['flash'] = array(
-    'type' => 'success',
-    'content' => 'Logout Success'
-  );
-  $app->redirect('./');
-});
+include 'routes/login.php';
 
 $app->get('/resume', function() {
   echo 'my';
@@ -106,6 +69,10 @@ $app->get('/candidate', function() use($app) {
 
 $app->get('/opening', function() {
   echo 'Opening';
+});
+
+$app->get('/client', function() {
+  echo 'Clients';
 });
 
 include 'routes/info.php';
