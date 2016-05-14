@@ -108,27 +108,7 @@ $app->get('/opening', function() {
   echo 'Opening';
 });
 
-$app->get('/info', function() use($app) {
-  if(isset($_GET['id'])) {
-    $info = R::findOne('info', ' id = ? ', [$_GET['id']]);
-    if($info) {
-      $app->render('info_detail.php', array('info' => $info));
-    }
-  } else {
-    $query = ' 1 ';
-    $param = array();
-    $pkeys = array('category', 'source');
-    foreach($pkeys as $pkey) {
-      if(isset($_GET[$pkey])) {
-        $query .= " AND ".$pkey." LIKE ?";
-        $param[] = "%".$_GET[$pkey]."%";
-      }
-    }
-    $info_list = R::find('info', $query, $param);
-    $app->render('info_list.php', array('data' => $info_list));
-  }
-});
-
+include 'routes/info.php';
 include 'routes/init.php';
 
 $app->run();

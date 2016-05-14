@@ -13,7 +13,8 @@
     'candidate' => array('Candidates', 'con'),
     'opening' => array('Openings', 'con'),
     'client' => array('Clients', 'con'),
-    'info' => array('Info', 'login')
+    'info' => array('Info', 'login'),
+    'info_add' => array('Add Info', 'con')
   );
   if($active_menu == '') {
     $active_menu = './';
