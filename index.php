@@ -70,24 +70,81 @@ $app->get('/resume', function() {
   echo 'my';
 });
 
+$app->get('/consultant', function() use($app) {
+  if(!isset($_SESSION['user'])) {
+    $app->redirect('./login');
+    $app->halt('302');
+  }
+  $rel = R::findOne('relate', ' can = ? ', [$_SESSION['user']]);
+  if(!$rel) {
+    echo 'You Have No Consultant';
+  } else {
+    $con = R::findOne('user', ' user = ? ', [$rel['con']]);
+    echo '<h2>My Consultant</h2>';
+    echo '<img style="border-radius: 100%" src="assets/pic/'.$con['user'].'.jpg">';
+    echo '<br><br>Name: '.$con['name'];
+  }
+});
+
+$app->get('/candidate', function() use($app) {
+  if(!isset($_SESSION['user'])) {
+    $app->redirect('./login');
+    $app->halt('302');
+  }
+  $rel = R::find('relate', ' con = ? ', [$_SESSION['user']]);
+  echo '<h2>Candidates</h2>';
+  if(!$rel) {
+    echo 'You Have No Candidate';
+  } else {
+    foreach($rel as $r) {
+      $can = R::findOne('user', ' user = ? ', [$r['can']]);
+      echo '<img style="border-radius: 100%" src="assets/pic/'.$can['user'].'.jpg">';
+      echo '<br><br>Name: '.$can['name'].'<br><br>';
+    }
+  }
+});
+
+$app->get('/opening', function() {
+  echo 'Opening';
+});
+
 $app->get('/info', function() {
   echo 'info';
 });
 
 $app->get('/init', function() {
+  $user_key = array('user', 'pass', 'type', 'name');
   $user = array(
-    array('can01', '12345', 'can'),
-    array('can02', '23456', 'can'),
-    array('con01', '12345', 'con'),
-    array('con02', '23456', 'con')
+    array('can01', '12345', 'can', '張宛萍'),
+    array('can02', '23456', 'can', '林涵易'),
+    array('can03', '23456', 'can', '李海卉'),
+    array('can04', '23456', 'can', '賴碧珊'),
+    array('can05', '23456', 'can', '陳依夢'),
+    array('con01', '12345', 'con', '黃映萱'),
+    array('con02', '23456', 'con', '吳向波')
   );
   foreach($user as $u) {
-    if(!R::findOne( 'user', ' user = ? ', [$u[0]])) {
+    if(!R::findOne('user', ' user = ? ', [$u[0]])) {
       $ub = R::dispense('user');
-      $ub->user = $u[0];
-      $ub->pass = $u[1];
-      $ub->type = $u[2];
+      foreach($user_key as $index => $key) {
+        $ub[$key] = $u[$index];
+      }
       R::store($ub);
+    }
+  }
+  $relate = array(
+    array('can01', 'con01'),
+    array('can02', 'con02'),
+    array('can03', 'con01'),
+    array('can04', 'con02'),
+    array('can05', 'con01'),
+  );
+  foreach($relate as $r) {
+    if(!R::findOne('relate', ' can = ? AND con = ? ', [$r[0], $r[1]])) {
+      $rb = R::dispense('relate');
+      $rb->can = $r[0];
+      $rb->con = $r[1];
+      R::store($rb);
     }
   }
 });
