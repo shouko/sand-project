@@ -4,9 +4,24 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sakirai</title>
+<?php
+  $menu = array(
+    './' => array('Home', 'public'),
+    'resume' => array('Resume', 'can'),
+    'consultant' => array('My Consultant', 'can'),
+    'jobs' => array('Finding Jobs', 'can'),
+    'candidate' => array('Candidates', 'con'),
+    'opening' => array('Openings', 'con'),
+    'client' => array('Clients', 'con'),
+    'info' => array('Info', 'login')
+  );
+  if($active_menu == '') {
+    $active_menu = './';
+  }
+  echo '<title>'.($active_menu == './' ? $menu[$active_menu][0].' - ' : '').'Sakirai</title>';
+?>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <link href="assets/css/sticky-footer-navbar.css" rel="stylesheet">
 
@@ -36,19 +51,9 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
 <?php
-  $menu = array(
-    array('./', 'Home', 'public'),
-    array('resume', 'Resume', 'candidate'),
-    array('consultant', 'My Consultant', 'candidate'),
-    array('jobs', 'Finding Jobs', 'candidate'),
-    array('info', 'Info', 'candidate')
-  );
-  if($active_menu == '') {
-    $active_menu = './';
-  }
-  foreach($menu as $item) {
-    if($nav_type == $item[2]) {
-      echo '<li'.($active_menu == $item[0] ? ' class="active"' : '').'><a href="'.$item[0].'">'.$item[1].'</a></li>';
+  foreach($menu as $key => $item) {
+    if($item[1] == 'public' || $nav_type == $item[1] || ($nav_type != 'public' && $item[1] == 'login')) {
+      echo '<li'.($active_menu == $key ? ' class="active"' : '').'><a href="'.$key.'">'.$item[0].'</a></li>';
     }
   }
 ?>          </ul>
@@ -65,7 +70,7 @@
                 <li role="separator" class="divider"></li>
                 <li class="dropdown-header">Nav header</li>
                 <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
+                <li><a href="logout">Logout</a></li>
               </ul>
             </li>
 <?php
@@ -81,3 +86,9 @@
       </div>
     </nav>
     <div class="container">
+<?php
+  if(isset($_SESSION['flash'])){
+    echo '<div class="bg-'.$_SESSION['flash']['type'].'" style="line-height: 2em; padding-left: 2em">'.$_SESSION['flash']['content'].'</div>';
+    unset($_SESSION['flash']);
+  }
+?>
