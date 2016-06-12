@@ -28,10 +28,7 @@ $app->get('/', function() use($app) {
 });
 
 include 'routes/login.php';
-
-$app->get('/resume', function() {
-  echo 'my';
-});
+include 'routes/resume.php';
 
 $app->get('/consultant', function() use($app) {
   if(!isset($_SESSION['user'])) {
