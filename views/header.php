@@ -11,8 +11,8 @@
     'consultant' => array('My Consultant', 'can'),
     'jobs' => array('Finding Jobs', 'can'),
     'candidate' => array('Candidates', 'con'),
-    'opening' => array('Openings', 'con'),
     'client' => array('Clients', 'con'),
+    'opening' => array('Openings', 'con'),
     'info' => array('Info', 'login'),
     'info_add' => array('Add Info', 'con')
   );
