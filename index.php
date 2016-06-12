@@ -30,6 +30,7 @@ $app->get('/', function() use($app) {
 include 'routes/login.php';
 include 'routes/resume.php';
 include 'routes/note.php';
+include 'routes/message.php';
 
 $app->get('/consultant', function() use($app) {
   if(!isset($_SESSION['user'])) {
@@ -44,6 +45,7 @@ $app->get('/consultant', function() use($app) {
     echo '<h2>My Consultant</h2>';
     echo '<img style="border-radius: 100%" src="assets/pic/'.$con['user'].'.jpg">';
     echo '<br><br>Name: '.$con['name'];
+    echo '<br><br><a class=" btn-warning btn" href="message?user='.$con['user'].'">Message</a>';
   }
 });
 
