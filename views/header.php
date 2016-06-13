@@ -9,10 +9,9 @@
     './' => array('Home', 'public'),
     'resume' => array('Resume', 'can'),
     'consultant' => array('My Consultant', 'can'),
-    'jobs' => array('Finding Jobs', 'can'),
     'candidate' => array('Candidates', 'con'),
     'client' => array('Clients', 'con'),
-    'opening' => array('Openings', 'con'),
+    'job' => array('Openings', 'login'),
     'info' => array('Info', 'login'),
     'info_add' => array('Add Info', 'con')
   );

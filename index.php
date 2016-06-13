@@ -58,10 +58,7 @@ $app->get('/candidate', function() use($app) {
   $app->render('candidate_list.php', array('data' => $can));
 });
 
-$app->get('/opening', function() {
-  echo 'Opening';
-});
-
+include 'routes/job.php';
 include 'routes/client.php';
 include 'routes/info.php';
 include 'routes/init.php';
