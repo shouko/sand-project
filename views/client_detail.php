@@ -2,7 +2,7 @@
 <a class="btn-xs btn-warning btn" href="job?client=<?= $client['id'] ?>">List Job</a>
 <?php
 if($_SESSION['type'] == 'con') {
-  echo ' <a class="btn-xs btn-warning btn" href="job_add">Add Job</a>';
+  echo ' <a class="btn-xs btn-warning btn" href="job_add?client='.$client['id'].'">Add Job</a>';
 }
 ?>
 <br><br>
