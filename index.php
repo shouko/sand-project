@@ -62,10 +62,7 @@ $app->get('/opening', function() {
   echo 'Opening';
 });
 
-$app->get('/client', function() {
-  echo 'Clients';
-});
-
+include 'routes/client.php';
 include 'routes/info.php';
 include 'routes/init.php';
 

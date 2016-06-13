@@ -45,4 +45,16 @@ $app->get('/init', function() {
     }
     R::store($ib);
   }
+  $client_key = ['name', 'category', 'content', 'date'];
+  $client = [
+    ['盈富', '電子業', '', '2010/02/02'],
+    ['春如', '食品業', '好吃的鳳梨罐頭', '1981/01/01']
+  ];
+  foreach($client as $c) {
+    $cb = R::dispense('client');
+    foreach($client_key as $index => $key) {
+      $cb[$key] = $c[$index];
+    }
+    R::store($cb);
+  }
 });
