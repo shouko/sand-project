@@ -2,7 +2,7 @@
 
 <footer class="footer">
   <div class="container">
-    <p class="text-muted">&copy; 2016 Sakirai</p>
+    <p class="text-muted">&copy; 2016</p>
   </div>
 </footer>
 
