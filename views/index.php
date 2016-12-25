@@ -1,4 +1,4 @@
 <div class="page-header">
-  <h1>Adecco</h1>
+  <h1>SAND</h1>
 </div>
-<p class="lead">Adecco Consultant System</p>
+<p class="lead">SAND Consultant System</p>

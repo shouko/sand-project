@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 require 'inc/rb.php';
 require 'inc/lib.php';
 
-R::setup('sqlite:/tmp/sakirai.db');
+R::setup('sqlite:/tmp/sand.db');
 $app = new \Slim\Slim(
   array('templates.path' => './views')
 );
