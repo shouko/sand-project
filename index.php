@@ -62,5 +62,7 @@ include 'routes/job.php';
 include 'routes/client.php';
 include 'routes/info.php';
 include 'routes/init.php';
+include 'routes/like.php';
+include 'routes/comment.php';
 
 $app->run();
